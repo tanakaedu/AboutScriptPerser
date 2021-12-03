@@ -114,7 +114,7 @@ public class TextLog : MonoBehaviour
 
     void Start()
     {
-        var mes = messages.text.Split(‘\n’);
+        var mes = messages.text.Split('\n');
         for (int i = 0; i < mes.Length; i++)
         {
             Debug.Log(mes[i].Trim());
