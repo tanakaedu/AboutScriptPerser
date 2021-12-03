@@ -91,6 +91,46 @@ l
 
 このように分解することで、最初の文字列で処理を分岐して、分岐先で属性を読み取って必要な処理を実行するようにすれば、プレイヤーを実装することができます。
 
+## Unityでのテキストファイルの扱い方
+UnityはテキストファイルをTextAssetを使って簡単に扱うことができます。以下のようなテキストファイルを用意して読み込む例を示します。文字エンコードは UTF-8 である必要があります。
+
+messages.txt
+```
+今は9:00です。
+おはようございます、デジタルアーツ太郎さん。
+１日頑張りましょう
+```
+
+スクリプトは以下の通り。
+
+TextLog.cs
+```cs
+using UnityEngine;
+
+public class TextLog : MonoBehaviour
+{
+    [SerializeField]
+    TextAsset messages = default;
+
+    void Start()
+    {
+        var mes = messages.text.Split(‘\n’);
+        for (int i = 0; i < mes.Length; i++)
+        {
+            Debug.Log(mes[i].Trim());
+        }
+    }
+}
+```
+
+上記のスクリプトを何らかのゲームオブジェクトにアタッチして、Inspectorウィンドウで `messages.txt` を Messages 欄にドラッグ&ドロップすることで動かすことができます。テキストファイルの読み込み方と、何らかの区切り文字(今回は改行である\n)で分割する方法が分かれば、おおよそのテキストファイルは扱えます。
+
+- [Split('区切り文字')](https://docs.microsoft.com/ja-jp/dotnet/api/system.string.split?view=net-6.0) 文字列を指定の区切り文字で分割して、文字配列を返します
+- [Trim()](https://docs.microsoft.com/ja-jp/dotnet/api/system.string.trim?view=net-6.0) 空白や改行などの空白文字を削除した文字列を返します
+- [IndexOf("文字列")](https://docs.microsoft.com/ja-jp/dotnet/api/system.string.indexof?view=net-6.0) 指定の文字列が始まる位置を返します。戻り値が0なら先頭が指定の文字列、1以上なら文字列が含まれている、-1なら文字列が含まれないことを示します
+
+
+
 ## 参考URL
 - [TYRANO SCRIPT V5](https://tyrano.jp/usage/tutorial/ready_v5)
 
